@@ -524,7 +524,7 @@ static SFAlertView *__sf_alert_current_view;
         CGFloat height = superview.bounds.size.width;
         verticalConstraint.constant = height * 0.5 + CGRectGetHeight(self.bounds) * 0.5;
         [superview setNeedsUpdateConstraints];
-        [superview layoutIfNeeded];
+        [superview setNeedsLayout];
         
         verticalConstraint.constant = 0;
         [superview setNeedsUpdateConstraints];
@@ -534,7 +534,7 @@ static SFAlertView *__sf_alert_current_view;
          options:UIViewAnimationOptionCurveEaseOut
          animations:^
         {
-            [superview layoutIfNeeded];
+            [superview setNeedsLayout];
         }
          completion:^(BOOL finished) {
              if (completion)
@@ -580,7 +580,7 @@ static SFAlertView *__sf_alert_current_view;
          options:UIViewAnimationOptionCurveEaseOut
          animations:^
          {
-             [superview layoutIfNeeded];
+             [superview setNeedsLayout];
          }
          completion:^(BOOL finished) {
              if (completion)
