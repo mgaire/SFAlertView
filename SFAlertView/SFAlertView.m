@@ -275,23 +275,20 @@ static SFAlertView *__sf_alert_current_view;
 + (void)showBackground
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (!__sf_alert_background_window)
-        {
-            UIScreen *screen = [UIScreen mainScreen];
-            CGRect bounds = (IS_IOS8) ? screen.nativeBounds : screen.bounds;
+        UIScreen *screen = [UIScreen mainScreen];
+        CGRect bounds = (IS_IOS8) ? screen.nativeBounds : screen.bounds;
 
-            __sf_alert_background_window = [[SFAlertBackgroundWindow alloc]
-                                            initWithFrame:bounds
-                                            andStyle:SFAlertViewBackgroundStyleGradient];
-            [__sf_alert_background_window makeKeyAndVisible];
-            __sf_alert_background_window.alpha = 0;
-            [UIView
-             animateWithDuration:0.3f
-             animations:^
-             {
-                 __sf_alert_background_window.alpha = 1;
-             }];
-        }
+        __sf_alert_background_window = [[SFAlertBackgroundWindow alloc]
+                                        initWithFrame:bounds
+                                        andStyle:SFAlertViewBackgroundStyleGradient];
+        [__sf_alert_background_window makeKeyAndVisible];
+        __sf_alert_background_window.alpha = 0;
+        [UIView
+         animateWithDuration:0.3f
+         animations:^
+         {
+             __sf_alert_background_window.alpha = 1;
+         }];
     });
 }
 
@@ -301,7 +298,6 @@ static SFAlertView *__sf_alert_current_view;
         if (!animated)
         {
             [__sf_alert_background_window removeFromSuperview];
-            __sf_alert_background_window = nil;
             return;
         }
         [UIView
@@ -313,7 +309,6 @@ static SFAlertView *__sf_alert_current_view;
          completion:^(BOOL finished)
         {
             [__sf_alert_background_window removeFromSuperview];
-            __sf_alert_background_window = nil;
         }];
     });
 }
