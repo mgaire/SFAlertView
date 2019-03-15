@@ -274,44 +274,48 @@ static SFAlertView *__sf_alert_current_view;
 
 + (void)showBackground
 {
-    if (!__sf_alert_background_window)
-    {
-        UIScreen *screen = [UIScreen mainScreen];
-        CGRect bounds = (IS_IOS8) ? screen.nativeBounds : screen.bounds;
-        
-        __sf_alert_background_window = [[SFAlertBackgroundWindow alloc]
-                                        initWithFrame:bounds
-                                        andStyle:SFAlertViewBackgroundStyleGradient];
-        [__sf_alert_background_window makeKeyAndVisible];
-        __sf_alert_background_window.alpha = 0;
-        [UIView
-         animateWithDuration:0.3f
-         animations:^
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!__sf_alert_background_window)
         {
-            __sf_alert_background_window.alpha = 1;
-        }];
-    }
+            UIScreen *screen = [UIScreen mainScreen];
+            CGRect bounds = (IS_IOS8) ? screen.nativeBounds : screen.bounds;
+
+            __sf_alert_background_window = [[SFAlertBackgroundWindow alloc]
+                                            initWithFrame:bounds
+                                            andStyle:SFAlertViewBackgroundStyleGradient];
+            [__sf_alert_background_window makeKeyAndVisible];
+            __sf_alert_background_window.alpha = 0;
+            [UIView
+             animateWithDuration:0.3f
+             animations:^
+             {
+                 __sf_alert_background_window.alpha = 1;
+             }];
+        }
+    });
 }
 
 + (void)hideBackgroundAnimated:(BOOL)animated
 {
-    if (!animated)
-    {
-        [__sf_alert_background_window removeFromSuperview];
-        __sf_alert_background_window = nil;
-        return;
-    }
-    [UIView
-     animateWithDuration:0.3
-     animations:^
-    {
-        __sf_alert_background_window.alpha = 0;
-    }
-     completion:^(BOOL finished)
-    {
-        [__sf_alert_background_window removeFromSuperview];
-        __sf_alert_background_window = nil;
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!animated)
+        {
+            [__sf_alert_background_window removeFromSuperview];
+            __sf_alert_background_window = nil;
+            return;
+        }
+        [UIView
+         animateWithDuration:0.3
+         animations:^
+        {
+            __sf_alert_background_window.alpha = 0;
+        }
+         completion:^(BOOL finished)
+        {
+            [__sf_alert_background_window removeFromSuperview];
+            __sf_alert_background_window = nil;
+        }];
+    });
 }
 
 #pragma mark - Custom Getter & Setter Methods
