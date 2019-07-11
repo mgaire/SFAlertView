@@ -13,6 +13,10 @@ Pod::Spec.new do |s|
 
   s.license      = { :type => 'MIT', :file => 'LICENSE.md' }
 
+  s.author       = { "Florian Sey" => "florian.sey@gmail.com" }
+
+  s.social_media_url = "http://twitter.com/floriansey"
+
   s.platform     = :ios, '6.1'
 
   s.source       = { :git => "https://github.com/mgaire/SFAlertView.git", :tag => "1.0.15" }
